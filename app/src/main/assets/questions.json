@@ -1,0 +1,137 @@
+[
+  {
+    "id": "q1",
+    "text": "¿Cuál es la palabra reservada para declarar una variable de solo lectura en Kotlin?",
+    "options": ["var", "val", "let"],
+    "correctIndex": 1,
+    "category": "KOTLIN",
+    "difficulty": "EASY",
+    "isUserCreated": false
+  },
+  {
+    "id": "q2",
+    "text": "¿Qué función de orden superior se usa comúnmente para transformar colecciones en Kotlin?",
+    "options": ["filter", "map", "forEach"],
+    "correctIndex": 1,
+    "category": "KOTLIN",
+    "difficulty": "MEDIUM",
+    "isUserCreated": false
+  },
+  {
+    "id": "q3",
+    "text": "¿Cómo se denominan las clases en Kotlin que están diseñadas exclusivamente para contener estado?",
+    "options": ["Enum classes", "Data classes", "Sealed classes"],
+    "correctIndex": 1,
+    "category": "KOTLIN",
+    "difficulty": "EASY",
+    "isUserCreated": false
+  },
+  {
+    "id": "q4",
+    "text": "¿Qué operador se utiliza en Kotlin para realizar una llamada segura ante nulos?",
+    "options": ["!!", "?.", "?:"],
+    "correctIndex": 1,
+    "category": "KOTLIN",
+    "difficulty": "EASY",
+    "isUserCreated": false
+  },
+  {
+    "id": "q5",
+    "text": "¿Cuál es el propósito principal de una corrutina en Kotlin?",
+    "options": ["Programación asíncrona no bloqueante", "Gestión de memoria automática", "Compilación multiplataforma"],
+    "correctIndex": 0,
+    "category": "KOTLIN",
+    "difficulty": "HARD",
+    "isUserCreated": false
+  },
+  {
+    "id": "q6",
+    "text": "¿Qué anotación marca una función composable en Jetpack Compose?",
+    "options": ["@Composable", "@ViewFactory", "@UIComponent"],
+    "correctIndex": 0,
+    "category": "COMPOSE",
+    "difficulty": "EASY",
+    "isUserCreated": false
+  },
+  {
+    "id": "q7",
+    "text": "¿Qué componente de diseño en Compose organiza elementos verticalmente uno debajo del otro?",
+    "options": ["Row", "Box", "Column"],
+    "correctIndex": 2,
+    "category": "COMPOSE",
+    "difficulty": "EASY",
+    "isUserCreated": false
+  },
+  {
+    "id": "q8",
+    "text": "¿Qué mecanismo se utiliza en Compose para redibujar la UI cuando cambia el estado observable?",
+    "options": ["Recomposición", "Renderizado imperativo", "Refresco síncrono"],
+    "correctIndex": 0,
+    "category": "COMPOSE",
+    "difficulty": "MEDIUM",
+    "isUserCreated": false
+  },
+  {
+    "id": "q9",
+    "text": "¿Qué modificador se usa para permitir que un contenedor o elemento detecte clics?",
+    "options": ["modifier.scrollable()", "modifier.clickable()", "modifier.focusable()"],
+    "correctIndex": 1,
+    "category": "COMPOSE",
+    "difficulty": "EASY",
+    "isUserCreated": false
+  },
+  {
+    "id": "q10",
+    "text": "¿Cómo se previene la recomposición innecesaria de elementos estáticos en listas grandes de Compose?",
+    "options": ["Usando remember y keys estables", "Desactivando el ciclo de vida", "Aplicando estilos XML"],
+    "correctIndex": 0,
+    "category": "COMPOSE",
+    "difficulty": "HARD",
+    "isUserCreated": false
+  },
+  {
+    "id": "q11",
+    "text": "¿Qué significa la sigla MVVM en arquitectura Android?",
+    "options": ["Model View Virtual Machine", "Model View ViewModel", "Module View Value Manager"],
+    "correctIndex": 1,
+    "category": "MVVM",
+    "difficulty": "EASY",
+    "isUserCreated": false
+  },
+  {
+    "id": "q12",
+    "text": "¿Cuál es la responsabilidad principal del ViewModel en MVVM?",
+    "options": ["Renderizar directamente la vista XML", "Almacenar y gestionar el estado de la UI de forma sobreviviente a cambios de configuración", "Conectarse directamente con bases de datos remotas sin repositorios"],
+    "correctIndex": 1,
+    "category": "MVVM",
+    "difficulty": "MEDIUM",
+    "isUserCreated": false
+  },
+  {
+    "id": "q13",
+    "text": "¿Qué tipo de flujo reactivo de Kotlin Coroutines se recomienda comúnmente en un ViewModel para exponer estado de UI?",
+    "options": ["StateFlow", "Flow frío básico", "Channel"],
+    "correctIndex": 0,
+    "category": "MVVM",
+    "difficulty": "MEDIUM",
+    "isUserCreated": false
+  },
+  {
+    "id": "q14",
+    "text": "¿Por qué el ViewModel no debe contener referencias directas a la Activity o al Context de la UI?",
+    "options": ["Para evitar fugas de memoria (memory leaks)", "Porque Kotlin no lo permite", "Para acelerar la compilación"],
+    "correctIndex": 0,
+    "category": "MVVM",
+    "difficulty": "HARD",
+    "isUserCreated": false
+  },
+  {
+    "id": "q15",
+    "text": "¿Cómo se comunica la UI con el ViewModel bajo el flujo de datos unidireccional (UDF)?",
+    "options": ["Enviando eventos o acciones al ViewModel y observando el estado resultante", "Modificando las variables internas del ViewModel directamente desde el Composable", "Llamando a métodos de la base de datos desde la UI"],
+    "correctIndex": 0,
+    "category": "MVVM",
+    "difficulty": "HARD",
+    "isUserCreated": false
+  }
+]
