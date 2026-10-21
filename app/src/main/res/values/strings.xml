@@ -42,4 +42,7 @@
     <string name="error_complete_fields">Completa todos los campos</string>
     <string name="error_question_duplicate">Esa pregunta ya existe</string>
     <string name="success_question_saved">Pregunta guardada</string>
+    <string name="history_title">Historial de Partidas</string>
+    <string name="history_back_button">Volver</string>
+    <string name="history_empty">No hay partidas registradas</string>
 </resources>
