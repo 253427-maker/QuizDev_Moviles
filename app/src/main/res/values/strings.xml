@@ -16,4 +16,10 @@
     <string name="category_mvvm">MVVM</string>
     <string name="score_format">Puntaje: %d (%d/%d)</string>
     <string name="date_format">Fecha reciente</string>
+    <string name="question_progress">Pregunta %d de %d</string>
+    <string name="next_button">Siguiente</string>
+    <string name="finish_button">Finalizar</string>
+    <string name="loading_questions">Cargando preguntas...</string>
+    <string name="score_display">Puntaje: %d</string>
+    <string name="streak_display">Racha: %d</string>
 </resources>
