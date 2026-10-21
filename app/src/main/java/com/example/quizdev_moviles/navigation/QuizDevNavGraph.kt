@@ -20,8 +20,15 @@ sealed class Screen(val route: String) {
     object Quiz : Screen("quiz/{category}/{count}") {
         fun createRoute(category: String, count: Int) = "quiz/$category/$count"
     }
-    object Results : Screen("results/{score}/{total}/{category}") {
-        fun createRoute(score: Int, total: Int, category: String) = "results/$score/$total/$category"
+    object Results : Screen("results/{score}/{total}/{correct}/{maxStreak}/{category}/{count}") {
+        fun createRoute(
+            score: Int,
+            total: Int,
+            correct: Int,
+            maxStreak: Int,
+            category: String,
+            count: Int
+        ) = "results/$score/$total/$correct/$maxStreak/$category/$count"
     }
     object NewQuestion : Screen("new_question")
     object History : Screen("history")
@@ -61,11 +68,15 @@ fun QuizDevNavGraph() {
             )
         ) { backStackEntry ->
             val categoryStr = backStackEntry.arguments?.getString("category") ?: "KOTLIN"
+            val count = backStackEntry.arguments?.getInt("count") ?: 5
             QuizScreen(
                 category = categoryStr,
-                onFinishQuiz = { score, total ->
-                    navController.navigate(Screen.Results.createRoute(score, total, categoryStr)) {
-                        popUpTo(Screen.Home.route)
+                count = count,
+                onFinishQuiz = { score, total, correct, maxStreak, category, qCount ->
+                    navController.navigate(
+                        Screen.Results.createRoute(score, total, correct, maxStreak, category, qCount)
+                    ) {
+                        popUpTo(Screen.Home.route) { inclusive = false }
                     }
                 },
                 onBack = { navController.popBackStack() }
@@ -77,23 +88,32 @@ fun QuizDevNavGraph() {
             arguments = listOf(
                 navArgument("score") { type = NavType.IntType },
                 navArgument("total") { type = NavType.IntType },
-                navArgument("category") { type = NavType.StringType }
+                navArgument("correct") { type = NavType.IntType },
+                navArgument("maxStreak") { type = NavType.IntType },
+                navArgument("category") { type = NavType.StringType },
+                navArgument("count") { type = NavType.IntType }
             )
         ) { backStackEntry ->
             val score = backStackEntry.arguments?.getInt("score") ?: 0
             val total = backStackEntry.arguments?.getInt("total") ?: 5
+            val correct = backStackEntry.arguments?.getInt("correct") ?: 0
+            val maxStreak = backStackEntry.arguments?.getInt("maxStreak") ?: 0
             val category = backStackEntry.arguments?.getString("category") ?: "KOTLIN"
+            val count = backStackEntry.arguments?.getInt("count") ?: 5
 
             ResultsScreen(
                 score = score,
                 total = total,
+                correct = correct,
+                maxStreak = maxStreak,
                 category = category,
+                count = count,
                 onHome = {
                     navController.popBackStack(Screen.Home.route, inclusive = false)
                 },
-                onRetry = {
-                    navController.navigate(Screen.Quiz.createRoute(category, total)) {
-                        popUpTo(Screen.Home.route)
+                onPlayAgain = { cat, cnt ->
+                    navController.navigate(Screen.Quiz.createRoute(cat, cnt)) {
+                        popUpTo(Screen.Home.route) { inclusive = false }
                     }
                 }
             )

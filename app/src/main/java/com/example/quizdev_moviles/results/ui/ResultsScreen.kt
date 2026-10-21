@@ -5,17 +5,22 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.quizdev_moviles.R
 
 @Composable
 fun ResultsScreen(
     score: Int,
     total: Int,
+    correct: Int,
+    maxStreak: Int,
     category: String,
+    count: Int,
     onHome: () -> Unit,
-    onRetry: () -> Unit
+    onPlayAgain: (String, Int) -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -29,54 +34,71 @@ fun ResultsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "¡Partida Terminada!",
-                fontSize = 32.sp,
+                text = stringResource(R.string.results_title),
+                fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Categoría: $category",
-                fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
 
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(24.dp),
+                        .padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Tu Puntuación",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium
+                        text = stringResource(R.string.results_score, score),
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "$score / $total",
-                        fontSize = 48.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
+                        text = stringResource(R.string.results_correct, correct, total),
+                        fontSize = 18.sp
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = onRetry,
+            Card(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Jugar de Nuevo")
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.results_max_streak, maxStreak),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = stringResource(R.string.results_saved_notice),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Button(
+                onClick = { onPlayAgain(category, count) },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = stringResource(R.string.play_again_button))
             }
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -85,7 +107,7 @@ fun ResultsScreen(
                 onClick = onHome,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Volver al Inicio")
+                Text(text = stringResource(R.string.go_home_button))
             }
         }
     }

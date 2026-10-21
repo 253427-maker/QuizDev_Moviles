@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.quizdev_moviles.data.model.Category
 import com.example.quizdev_moviles.data.model.Difficulty
+import com.example.quizdev_moviles.data.model.GameResult
 import com.example.quizdev_moviles.data.repository.QuizRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,11 +15,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/**
- * ViewModel encargado de gestionar la lógica de negocio y el estado de la partida (GameUiState).
- * Recibe la categoría y la cantidad de preguntas mediante SavedStateHandle,
- * selecciona preguntas al azar sin repetir, calcula puntuaciones, rachas y actualiza el estado.
- */
 class GameViewModel(
     application: Application,
     savedStateHandle: SavedStateHandle
@@ -31,14 +27,12 @@ class GameViewModel(
     private val _uiState = MutableStateFlow(GameUiState())
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
 
+    private var hasSavedResult = false
+
     init {
         loadGameQuestions()
     }
 
-    /**
-     * Carga las preguntas del repositorio, filtra por categoría si corresponde,
-     * selecciona una cantidad aleatoria sin repetir y establece el estado inicial del juego.
-     */
     private fun loadGameQuestions() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
@@ -73,10 +67,6 @@ class GameViewModel(
         }
     }
 
-    /**
-     * Procesa la opción seleccionada por el usuario, calcula la puntuación basándose en
-     * la dificultad de la pregunta y el sistema de rachas, y marca la pregunta como respondida.
-     */
     fun onOptionSelected(index: Int) {
         val currentState = _uiState.value
         if (currentState.isAnswered || currentState.questions.isEmpty()) return
@@ -117,9 +107,6 @@ class GameViewModel(
         }
     }
 
-    /**
-     * Avanza a la siguiente pregunta del cuestionario o finaliza la partida si era la última.
-     */
     fun onNextClicked() {
         val currentState = _uiState.value
         if (!currentState.isAnswered) return
@@ -135,8 +122,33 @@ class GameViewModel(
                 )
             }
         } else {
+            val allCorrectBonus = if (currentState.correctCount == currentState.questions.size) 20 else 0
+            val finalScore = currentState.score + allCorrectBonus
+
+            if (!hasSavedResult) {
+                hasSavedResult = true
+                viewModelScope.launch {
+                    val catEnum = try {
+                        Category.valueOf(categoryArg.uppercase())
+                    } catch (e: Exception) {
+                        Category.KOTLIN
+                    }
+                    val result = GameResult(
+                        dateMillis = System.currentTimeMillis(),
+                        category = catEnum,
+                        correct = currentState.correctCount,
+                        total = currentState.questions.size,
+                        score = finalScore
+                    )
+                    repository.saveGameResult(result)
+                }
+            }
+
             _uiState.update {
-                it.copy(isFinished = true)
+                it.copy(
+                    score = finalScore,
+                    isFinished = true
+                )
             }
         }
     }

@@ -19,7 +19,14 @@
     <string name="question_progress">Pregunta %d de %d</string>
     <string name="next_button">Siguiente</string>
     <string name="finish_button">Finalizar</string>
-    <string name="loading_questions">Cargando preguntas...</string>
+    <string name="loading_questions">Cargando preguntas…</string>
     <string name="score_display">Puntaje: %d</string>
     <string name="streak_display">Racha: %d</string>
+    <string name="results_title">Resultado de la Partida</string>
+    <string name="results_score">Puntaje Final: %d</string>
+    <string name="results_correct">Aciertos: %d / %d</string>
+    <string name="results_max_streak">Racha Máxima: %d</string>
+    <string name="results_saved_notice">Partida guardada en el historial</string>
+    <string name="play_again_button">Jugar de nuevo</string>
+    <string name="go_home_button">Ir al inicio</string>
 </resources>
