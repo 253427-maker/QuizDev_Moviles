@@ -1,12 +1,15 @@
 package com.example.quizdev_moviles.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.quizdev_moviles.home.ui.HomeScreen
+import com.example.quizdev_moviles.home.ui.HomeViewModel
 import com.example.quizdev_moviles.quiz.ui.QuizScreen
 import com.example.quizdev_moviles.results.ui.ResultsScreen
 import com.example.quizdev_moviles.questions.ui.NewQuestionScreen
@@ -14,8 +17,8 @@ import com.example.quizdev_moviles.history.ui.HistoryScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
-    object Quiz : Screen("quiz/{category}") {
-        fun createRoute(category: String) = "quiz/$category"
+    object Quiz : Screen("quiz/{category}/{count}") {
+        fun createRoute(category: String, count: Int) = "quiz/$category/$count"
     }
     object Results : Screen("results/{score}/{total}/{category}") {
         fun createRoute(score: Int, total: Int, category: String) = "results/$score/$total/$category"
@@ -30,12 +33,19 @@ fun QuizDevNavGraph() {
 
     NavHost(navController = navController, startDestination = Screen.Home.route) {
         composable(Screen.Home.route) {
+            val viewModel: HomeViewModel = viewModel()
+            val state = viewModel.uiState.collectAsStateWithLifecycle().value
+
             HomeScreen(
-                onStartQuiz = { category ->
-                    navController.navigate(Screen.Quiz.createRoute(category))
+                state = state,
+                onCategorySelected = { category ->
+                    viewModel.onCategorySelected(category)
                 },
-                onNavigateToHistory = {
-                    navController.navigate(Screen.History.route)
+                onQuestionCountChanged = { count ->
+                    viewModel.onQuestionCountChanged(count)
+                },
+                onStartGame = { category, count ->
+                    navController.navigate(Screen.Quiz.createRoute(category.name, count))
                 },
                 onNavigateToNewQuestion = {
                     navController.navigate(Screen.NewQuestion.route)
@@ -45,13 +55,16 @@ fun QuizDevNavGraph() {
 
         composable(
             route = Screen.Quiz.route,
-            arguments = listOf(navArgument("category") { type = NavType.StringType })
+            arguments = listOf(
+                navArgument("category") { type = NavType.StringType },
+                navArgument("count") { type = NavType.IntType }
+            )
         ) { backStackEntry ->
-            val category = backStackEntry.arguments?.getString("category") ?: "Kotlin"
+            val categoryStr = backStackEntry.arguments?.getString("category") ?: "KOTLIN"
             QuizScreen(
-                category = category,
+                category = categoryStr,
                 onFinishQuiz = { score, total ->
-                    navController.navigate(Screen.Results.createRoute(score, total, category)) {
+                    navController.navigate(Screen.Results.createRoute(score, total, categoryStr)) {
                         popUpTo(Screen.Home.route)
                     }
                 },
@@ -69,7 +82,7 @@ fun QuizDevNavGraph() {
         ) { backStackEntry ->
             val score = backStackEntry.arguments?.getInt("score") ?: 0
             val total = backStackEntry.arguments?.getInt("total") ?: 5
-            val category = backStackEntry.arguments?.getString("category") ?: "Kotlin"
+            val category = backStackEntry.arguments?.getString("category") ?: "KOTLIN"
 
             ResultsScreen(
                 score = score,
@@ -79,7 +92,7 @@ fun QuizDevNavGraph() {
                     navController.popBackStack(Screen.Home.route, inclusive = false)
                 },
                 onRetry = {
-                    navController.navigate(Screen.Quiz.createRoute(category)) {
+                    navController.navigate(Screen.Quiz.createRoute(category, total)) {
                         popUpTo(Screen.Home.route)
                     }
                 }

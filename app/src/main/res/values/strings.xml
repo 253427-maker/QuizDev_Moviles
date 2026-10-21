@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">QuizDev_Moviles</string>
+    <string name="app_name">QuizDev</string>
+    <string name="home_title">QuizDev</string>
+    <string name="home_subtitle">Aprende Kotlin, Android y Jetpack Compose</string>
+    <string name="best_score_label">Mejor Puntaje: %d</string>
+    <string name="category_label">Categoría</string>
+    <string name="question_count_label">Cantidad de preguntas: %d</string>
+    <string name="play_button">Jugar</string>
+    <string name="questions_load_failed">No se pudieron cargar las preguntas</string>
+    <string name="add_question_button">+ Agregar pregunta</string>
+    <string name="recent_games_title">Últimas partidas</string>
+    <string name="empty_history">Aún no hay partidas. Juega la primera.</string>
+    <string name="history_icon_desc">Historial</string>
+    <string name="category_kotlin">Kotlin</string>
+    <string name="category_compose">Jetpack Compose</string>
+    <string name="category_mvvm">MVVM</string>
+    <string name="score_format">Puntaje: %d (%d/%d)</string>
+    <string name="date_format">Fecha reciente</string>
 </resources>
