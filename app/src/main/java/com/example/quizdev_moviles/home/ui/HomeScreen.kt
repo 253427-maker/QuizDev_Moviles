@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.quizdev_moviles.R
+import com.example.quizdev_moviles.core.ui.CategorySelector
 import com.example.quizdev_moviles.data.model.Category
 import com.example.quizdev_moviles.data.model.GameResult
 import kotlinx.coroutines.launch
@@ -125,37 +126,6 @@ private fun BestScoreCard(bestScore: Int) {
                 text = stringResource(R.string.best_score_label, bestScore),
                 style = MaterialTheme.typography.titleLarge
             )
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun CategorySelector(
-    selectedCategory: Category,
-    onCategorySelected: (Category) -> Unit
-) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(
-            text = stringResource(R.string.category_label),
-            style = MaterialTheme.typography.bodyLarge
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Category.entries.forEach { category ->
-                val label = when (category) {
-                    Category.KOTLIN -> stringResource(R.string.category_kotlin)
-                    Category.COMPOSE -> stringResource(R.string.category_compose)
-                    Category.MVVM -> stringResource(R.string.category_mvvm)
-                }
-                FilterChip(
-                    selected = selectedCategory == category,
-                    onClick = { onCategorySelected(category) },
-                    label = { Text(text = label) }
-                )
-            }
         }
     }
 }

@@ -29,4 +29,17 @@
     <string name="results_saved_notice">Partida guardada en el historial</string>
     <string name="play_again_button">Jugar de nuevo</string>
     <string name="go_home_button">Ir al inicio</string>
+    <string name="new_question_title">Nueva Pregunta</string>
+    <string name="question_text_label">Enunciado (máx. 120 caracteres)</string>
+    <string name="option_label">Opción %d</string>
+    <string name="correct_option_label">Correcta</string>
+    <string name="difficulty_label">Dificultad</string>
+    <string name="difficulty_easy">Fácil</string>
+    <string name="difficulty_medium">Media</string>
+    <string name="difficulty_hard">Difícil</string>
+    <string name="save_question_button">Guardar pregunta</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="error_complete_fields">Completa todos los campos</string>
+    <string name="error_question_duplicate">Esa pregunta ya existe</string>
+    <string name="success_question_saved">Pregunta guardada</string>
 </resources>
